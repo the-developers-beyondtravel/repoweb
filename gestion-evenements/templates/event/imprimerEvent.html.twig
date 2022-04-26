@@ -1,0 +1,67 @@
+<h3><strong>PegasusTravel</strong> </h3><hr>
+<h2 align ="center">Votre réservation a été bien enregistrée </h2><hr>
+
+
+
+
+<table border="1" align="centre" class="table table-striped table-bordered" >
+    <thead>
+    <tr>
+        <th>nom de reservation</th>
+        <th>dateEvent de chambre</th>
+        <th>typeEvent de personne</th>
+        <th>capacite de reservation</th>
+                <th>prix de reservation</th>
+
+
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr >
+
+        {% for  c in events %}
+         <ul class="pricing">
+            <td> Nom :{{ c.nom }}</td>
+            <td> Type : {{ c.typeevent }}</td>
+            <td> {{ c.getDateEvent()|date('d-m-Y') }}</td>
+            <td> Capavité : {{ c.capacite }}</td>
+            <td> Prix : {{ c.prix }}</td>
+               <ul class="pricing">
+
+        {% endfor %}
+
+    </tr >
+
+    </tbody>
+</table>
+<br>
+<p>PegasusTravel, votre Agence de Voyage en Tunisie en Ligne vous propose des Promotions sur vos Voyages et Séjours en Tunisie
+    et dans le Monde avec les Meilleurs Prix et Services.</p>
+<p>Agence de voyage 100% électronique, PegasusTravel propose régulièrement des offres
+    promotionnelles de séjours en Tunisie et à l'étranger.</p>
+
+<br>
+<br>
+
+
+<div class="col-md-3 col-sm-3">
+    <div class="widget">
+        <h5 class="widgetheading">Nos Contacts</h5>
+        <address>
+            Adresse: Angle rue des Entrepreneurs et rue du Métal Immeuble AMIRA,
+            6ème étage LAC II - 2035 TUNIS.</address>
+        <p>
+            <i class="icon-phone"></i>Tél:+(216) 70 103 103 <br>
+            Fax:+(216) 71 942 682
+            <i class="icon-envelope-alt"></i> PegasusTravel@gmail.com
+            <br>
+            Company Registered in Country Name. Company Reg. 12121212.
+            <br>
+            VAT Registration No. 021021021 | ATOL No. 1234
+        </p>
+    </div>
+</div>
+
+<h2>Bon Voyage !</h2>

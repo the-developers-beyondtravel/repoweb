@@ -1,0 +1,123 @@
+
+{% extends 'base.back.html.twig' %}
+
+{% block title %}Event liste{% endblock %}
+
+{% block body %}
+
+<script src="{{asset('dark.js')}}"></script>
+<link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+
+
+
+<section id="main-content">
+<section class="wrapper site-min-height">
+        <div class="row">
+          <div class="col-lg-12">
+
+
+     <form method="POST">
+    <input type="text" name="nom" >
+    <input type="submit" value="search">
+
+</form>
+           
+           
+
+{% for c in events %}
+
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+              <div class="custom-box">
+                <div class="icn-main-container">
+                  <img src="uploads/images/events/{{ c.image }}" height="200" width="200">
+                </div>
+                <ul class="pricing">
+               <li>Nom : {{ c.nom }}</li>
+                <li>Type : {{ c.typeevent }}</li>
+                <li>Date : {{ c.getDateEvent()|date('d-m-Y') }}</li>
+                <li>Capavité : {{ c.capacite }}</li>
+                <li>Prix : {{ c.prix }}</li>
+                </ul>
+               <ul class="pricing">
+                </ul>
+                
+                <a class="btn btn-theme" href="{{ path( 'update' , {'id':c.idEvent} )}}">Modifier</a>
+               <a class="btn btn-theme" href="{{ path( 'delete_events' , {'id':c.idEvent} )}}">Supprimer</a>
+
+             
+             
+              </div>
+              <!-- end custombox -->
+            </div>
+
+            {% endfor %}
+                          <a class="btn btn-primary" href="{{ path('trievent') }}">trie </a>
+
+              <a class="btn btn-primary" href="{{ path('imprimreservationm') }}">Imprimer votre réservation</a>
+
+
+        <!-- end col-4 -->
+  
+            <!-- end col-4 -->
+          </div>
+          <!--  /col-lg-12 -->
+        </div>
+        <!--  /row -->
+
+          <div class="container py-5">
+        <div class="d-flex justify-content-center">
+
+            {{ knp_pagination_render(events) }}
+        </div>
+    </div>
+
+
+
+
+
+
+
+<div id="google_translate_element">
+</div>
+
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+        </script>
+
+
+
+
+
+<script>
+            new Darkmode({
+                bottom: '32px',
+                right: '32px',
+                time: '0.8s',
+                label: '🌙'
+            }).showWidget();
+        </script>
+
+
+
+
+<!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+    
+      </section>
+      </section>
+
+      
+
+
+
+
+{% endblock %}
