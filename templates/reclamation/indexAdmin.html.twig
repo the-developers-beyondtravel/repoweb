@@ -1,0 +1,96 @@
+{%  extends 'base.back.html.twig' %}
+
+{% block title %}Reservation Admin{% endblock %}
+
+{% block body %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                    ['Etat', '%'],
+                    ['Approuver', {{ totalapprouve }} ],
+                    ['Refusé', {{ totalrefu }} ],
+                    ['En Cours',{{ totalencours }} ]
+
+            ]);
+
+            var options = {
+                title: 'Etat des reclamations'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+    </script>
+
+
+    <section id="main-content">
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
+
+        <section class="wrapper site-min-height">
+            <a class="btn btn-light" href="{{ path('export') }}">Exporter Excel</a>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-body">
+                        {% for reclamation in reclamations %}
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="custom-box">
+                                    <div class="icn-main-container">
+                                        <img src="{{ asset('uploads/images/') }}{{ reclamation.image }}" height="200" width="200">
+                                    </div>
+
+                                    <ul class="pricing">
+                                        <li>Type : {{ reclamation.type }}</li>
+                                        <li>Description : {{ reclamation.description }}</li>
+                                        <li>Sujet : {{ reclamation.sujet }}</li>
+                                        <li>Etat : {{ reclamation.etat }}</li>
+                                        <li>Montant : {{ reclamation.Montant }}</li>
+                                        {% set test = false %}
+
+                                        {% for remboursement in remboursements %}
+                                            {% if(remboursement.reclamation.id==reclamation.id) %}
+                                                {% set test = true %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if (reclamation.etat == "En Cours") %}
+                                            {% if(test==true) %}
+                                                    <a href="/remboursement/Admin/{{ reclamation.id }}" class="btn btn-warning">Voir Remboursement</a>
+                                            {% else %}
+                                                    <a href="/reclamation/Admin/Approuver/{{ reclamation.id }}" class="btn btn-success">Approuvée</a>
+                                                    <a href="/remboursement/Admin/Traiter/{{ reclamation.id }}" class="btn btn-warning">Traiter</a>
+                                                    <a href="/reclamation/Admin/Refuser/{{ reclamation.id }}" class="btn btn-danger">Refuser</a>
+                                            {% endif %}
+                                        {% else %}
+                                            {% if(test==true) %}
+                                                    <a href="/remboursement/Admin/{{ reclamation.id }}" class="btn btn-warning">Voir Remboursement</a>
+                                            {% else %}
+                                                    <a class="btn btn-light" >Pas de Remboursement</a>
+                                            {% endif %}
+                                        {% endif %}
+
+                                    </ul>
+                                    <ul class="pricing">
+                                    </ul>
+                                </div>
+                                <!-- end custombox -->
+                            </div>
+                        {% endfor %}
+
+                        <!-- end col-4 -->
+                        <!-- end col-4 -->
+                    </div>
+                    <!--  /col-lg-12 -->
+                </div>
+                <!--  /row -->
+            </div>
+        </section>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+
+{%  extends 'base.back.html.twig' %}
+
+{% block title %}Reservation Admin{% endblock %}
+
+{% block body %}
+    <section id="main-content">
+        <section class="wrapper site-min-height">
+
+            <div id='calendar'></div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-body">
+                        {% for reservation in reservations %}
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="custom-box">
+                                    <div class="icn-main-container">
+                                        <img src="" height="200" width="200">
+                                    </div>
+
+                                    <ul class="pricing">
+                                        <li>Destination Offre : {{ reservation.idoffre.destination }}</li>
+                                        <li>Date debut : {{ reservation.date|date('d-m-Y')}}</li>
+                                        <li>Destination Vol : {{ reservation.idvol.destination }}</li>
+                                        <li>Guide : {{ reservation.idguidetouristique.nom }} {{ reservation.idguidetouristique.prenom }}</li>
+                                        <li>Marque Voiture : {{ reservation.idvoiture.marque }}</li>
+                                        <li>Nom Hotel : {{ reservation.idhotel.nom }}</li>
+                                    </ul>
+                                    <ul class="pricing">
+                                    </ul>
+                                </div>
+                                <!-- end custombox -->
+                            </div>
+                        {% endfor %}
+
+                        <!-- end col-4 -->
+                        <!-- end col-4 -->
+                    </div>
+                    <!--  /col-lg-12 -->
+                </div>
+                <!--  /row -->
+            </div>
+        </section>
+    </section>
+{% endblock %}
+{% block javascripts_this_page %}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.3.0/main.min.js"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    start: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth,timeGridWeek'
+                },
+                events: {{  data|raw }},
+
+                editable: false
+            });
+            calendar.render();
+        });
+
+    </script>
+
+
+{% endblock %}
+

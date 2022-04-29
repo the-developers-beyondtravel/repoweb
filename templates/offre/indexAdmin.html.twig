@@ -1,0 +1,51 @@
+{%  extends 'base.back.html.twig' %}
+
+{% block title %}Offre Admin{% endblock %}
+
+{% block body %}
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="{{ path('app_offre_new') }}" class="btn btn-theme">Create new</a>
+
+                <div class="card-body">
+
+
+                    <div id="div_chart"></div>
+
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        {{ gc_draw(piechart, 'div_chart') }}
+                    </script>
+
+                    {% for offre in offres %}
+
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="custom-box">
+                            <ul class="pricing">
+                                <li>Destination : {{ offre.destination }}</li>
+                                <li>Date debut : {{ offre.DateDebut|date('d-m-Y')}}</li>
+                                <li>Date fin : {{ offre.DateFin|date('d-m-Y')}}</li>
+                                <li>Prix : {{ offre.prix }}</li>
+                            </ul>
+                            <ul class="pricing">
+                            </ul>
+                            <a class="btn btn-theme" href="/offre/Admin/edit/{{ offre.id }}">Modifier</a>
+                            <a class="btn btn-theme" href=/offre/Admin/delete/{{ offre.id }}">Suprimer</a>
+                        </div>
+                        <!-- end custombox -->
+                    </div>
+                    {% endfor %}
+
+                    <!-- end col-4 -->
+                    <!-- end col-4 -->
+                </div>
+                <!--  /col-lg-12 -->
+            </div>
+            <!--  /row -->
+        </div>
+    </section>
+</section>
+
+{% endblock %}

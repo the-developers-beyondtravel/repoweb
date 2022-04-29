@@ -1,0 +1,257 @@
+{%  extends 'base.html.twig' %}
+
+{% block title %}Offre index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid p0">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-banner-wrapper">
+                    <div class="banner-style-one owl-theme owl-carousel">
+                        <div class="slide slide-one" style="background-image: url({{asset('images/home/1.jpg')}}); height: 95vh;">
+                            <div class="container">
+                                <div class="row home-content">
+                                    <div class="col-lg-12 text-center p0">
+                                        <h3 class="banner-title">Self EducatIon Resources and Infos</h3>
+                                        <p>Technology is brining a massive wave of evolution on learning things on different ways.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide slide-one" style="background-image: url({{asset('images/home/2.jpg')}});height: 95vh;">
+                            <div class="container">
+                                <div class="row home-content">
+                                    <div class="col-lg-12 text-center p0">
+                                        <h3 class="banner-title">Self EducatIon Resources and Infos</h3>
+                                        <p>Technology is brining a massive wave of evolution on learning things on different ways</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide slide-one" style="background-image: url({{asset('images/home/3.jpg')}});height: 95vh;">
+                            <div class="container">
+                                <div class="row home-content">
+                                    <div class="col-lg-12 text-center p0">
+                                        <h3 class="banner-title">Find the Best Courses</h3>
+                                        <p>Technology is brining a massive wave of evolution on learning things on different ways</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-btn-block banner-carousel-btn">
+                        <span class="carousel-btn left-btn"><i class="flaticon-left-arrow left"></i></span>
+                        <span class="carousel-btn right-btn"><i class="flaticon-right-arrow-1 right"></i></span>
+                    </div><!-- /.carousel-btn-block banner-carousel-btn -->
+                </div><!-- /.main-banner-wrapper -->
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="shortcode_widget_table">
+                    <h4>Les Offres </h4>
+                    <div id="divs">
+                        <input class="form-control" type="text" id="search" placeholder="🔍">
+                        <a style="color:#FF0000;" class="tg-btn" href="" id="idup">UP ⬆️</a>
+                        <a style="color:#25DD28;" class="tg-btn" href="" id="iddown">DOWN ⬇️</a>
+                    </div>
+
+                    <div class="ui_kit_table">
+                        <table id="t"  class="table">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Destination</th>
+                                <th scope="col">Date Debut</th>
+                                <th scope="col">Date Fin</th>
+                                <th scope="col">Prix</th>
+                                <th scope="col">PDF</th>
+                            </tr>
+                            </thead>
+                            <tbody id="all">
+                            {% for offre in offres %}
+                                <tr>
+                                    <td>{{ offre.destination }}</td>
+                                    <td>{{ offre.DateDebut|date('d-m-Y')}}</td>
+                                    <td>{{ offre.DateFin|date('d-m-Y')}}</td>
+                                    <td>{{ offre.prix }}</td>
+                                    <td>
+                                        <a href="/offre/pdf/{{ offre.id }}" class="btn btn-info">PDF</a>
+                                    </td>
+
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="7">no records found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tbody id="search">
+                        </table>
+
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+                        </script>
+                        <script>
+                            $( document ).ready(function() {
+
+                                /*begin rechercher avancee multicritéres selon sujet et staus*/
+                                $("#divs").keyup(function(e){
+                                    /* La variable value va prendre la valeur insérer dans le champ de texte afin d’effectuer la recherche */
+                                    var value = $("#search").val();
+                                    if(value.length >= 2 || value.length == 0  )
+                                    {
+                                        //    alert(value);
+                                        /* Ajax est lancé lors du remplissage du champ texte dont l’id est « search » pour faire la recherche */
+                                        $.ajax({
+                                            /* l’url est une chaine de caractères contenant l’adresse où la requête est envoyée */
+                                            url : "{{ path('search_recc') }}",
+                                            /* La méthode utilisée pour transférer les données est GET */
+                                            type : 'GET',
+                                            /*Ici search value va prendre la chaine entrée par un utilisateur dans la zone de recherche et sera placée après l’url */
+                                            data: {
+                                                'searchValue' : value,
+                                            },
+                                            /*Cette fonction permet de vider le contenu du tableau pour recevoir le nouveau contenu*/
+                                            success : function(retour){
+                                                if(retour){
+                                                    $('#t tbody#search').empty();
+                                                    $.each(JSON.parse(retour), function(i, obj) {
+                                                        $('#t tbody#all').hide();
+                                                        $('#t tbody#search').append(
+
+                                                        '<tr>' +
+                                                            '<td> '+obj.destination +'  </td>' +
+                                                            '<td> '+obj.date_debut.substring(0,10)+'  </td>' +
+                                                            '<td>'+obj.date_fin.substring(0,10)+' </td>' +
+                                                            '<td>'+obj.prix+'</td>' +
+                                                            '<td>'+
+                                                               '<a href="/offre/pdf/'+obj.id_offre+'" class="btn btn-info">PDF</a>'+
+                                                            '</td>'+
+                                                            '</tr>');
+                                                    });
+                                                }
+                                                else
+                                                {
+
+                                                    $('#t tbody#all').show();
+                                                    $('#t tbody#search').empty();
+                                                    $('#t tbody#search').fadeIn('fast');
+
+                                                }
+                                            },
+                                        });
+                                        return false;
+                                    }
+                                });
+                                /*end rechercher avancee multicritéres selon sujet et staus*/
+
+
+                                /*begin trie up selon id*/
+                                $("#idup").click(function(e){
+                                    /* La variable value va prendre la valeur insérer dans le champ de texte afin d’effectuer la recherche */
+                                    var value = $("#search").val();
+                                    var value3 ="ASC";
+
+                                    //    alert(value);
+                                    /* Ajax est lancé lors du remplissage du champ texte dont l’id est « search » pour faire la recherche */
+                                    $.ajax({
+                                        /* l’url est une chaine de caractères contenant l’adresse où la requête est envoyée */
+                                        url : "{{ path('search_recc') }}",
+                                        /* La méthode utilisée pour transférer les données est GET */
+                                        type : 'GET',
+                                        /*Ici search value va prendre la chaine entrée par un utilisateur dans la zone de recherche et sera placée après l’url */
+                                        data: {
+                                            'searchValue' : value,
+                                            'orderid': value3
+                                        },
+                                        /*Cette fonction permet de vider le contenu du tableau pour recevoir le nouveau contenu*/
+                                        success : function(retour){
+                                            if(retour){
+                                                $('#t tbody#search').empty();
+                                                $.each(JSON.parse(retour), function(i, obj) {
+                                                    $('#t tbody#all').hide();
+                                                    $('#t tbody#search').append(
+                                                        '<tr>' +
+                                                        '<td> '+obj.destination +'  </td>' +
+                                                        '<td> '+obj.date_debut.substring(0,10)+'  </td>' +
+                                                        '<td>'+obj.date_fin.substring(0,10)+' </td>' +
+                                                        '<td>'+obj.prix+'</td>' +
+                                                        '<td>'+
+                                                        '<a href="/offre/pdf/'+obj.id_offre+'" class="btn btn-info">PDF</a>'+
+                                                        '</td>'+
+                                                        '</tr>');
+                                                });
+                                            }
+                                            else
+                                            {
+                                                $('#t tbody#all').show();
+                                                $('#t tbody#search').empty();
+                                                $('#t tbody#search').fadeIn('fast');
+                                            }
+                                        },
+                                    });
+                                    return false;
+
+                                });
+                                /*end trie up selon id*/
+
+                                /*begin trie down selon id*/
+                                $("#iddown").click(function(e){
+                                    /* La variable value va prendre la valeur insérer dans le champ de texte afin d’effectuer la recherche */
+                                    var value = $("#search").val();
+                                    var value3 ="DESC";
+
+                                    //    alert(value);
+                                    /* Ajax est lancé lors du remplissage du champ texte dont l’id est « search » pour faire la recherche */
+                                    $.ajax({
+                                        /* l’url est une chaine de caractères contenant l’adresse où la requête est envoyée */
+                                        url : "{{ path('search_recc') }}",
+                                        /* La méthode utilisée pour transférer les données est GET */
+                                        type : 'GET',
+                                        /*Ici search value va prendre la chaine entrée par un utilisateur dans la zone de recherche et sera placée après l’url */
+                                        data: {
+                                            'searchValue' : value,
+                                            'orderid': value3
+                                        },
+                                        /*Cette fonction permet de vider le contenu du tableau pour recevoir le nouveau contenu*/
+                                        success : function(retour){
+                                            if(retour){
+                                                $('#t tbody#search').empty();
+                                                $.each(JSON.parse(retour), function(i, obj) {
+                                                    $('#t tbody#all').hide();
+                                                    $('#t tbody#search').append(
+
+                                                        '<tr>' +
+                                                        '<td> '+obj.destination +'  </td>' +
+                                                        '<td> '+obj.date_debut.substring(0,10)+'  </td>' +
+                                                        '<td>'+obj.date_fin.substring(0,10)+' </td>' +
+                                                        '<td>'+obj.prix+'</td>' +
+                                                        '<td>'+
+                                                        '<a href="/offre/pdf/'+obj.id_offre+'" class="btn btn-info">PDF</a>' +
+                                                        '</td>'+
+                                                        '</tr>');
+                                                });
+                                            }
+                                            else
+                                            {
+                                                $('#t tbody#all').show();
+                                                $('#t tbody#search').empty();
+                                                $('#t tbody#search').fadeIn('fast');
+                                            }
+                                        },
+                                    });
+                                    return false;
+
+                                });
+                                /*end trie down selon id*/
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
