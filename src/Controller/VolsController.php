@@ -7,6 +7,7 @@ use App\Entity\Vols;
 use App\Form\VolsType;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 use App\Repository\VolsRepository;
+use phpDocumentor\Reflection\Types\Object_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
+use DateTime ;
 
 class VolsController extends AbstractController
 {
@@ -220,7 +221,7 @@ class VolsController extends AbstractController
                 'destination_retour'=>$event->getDestinationRetour(),
                 'title' => $event->getVoyage(),
                 'start' => $event->getDateDepart()->format('Y-m-d'),
-                'date_retour' => $event->getDateRetour(),
+                'date_retour' => $event->getDateRetour()->format('Y-m-d'),
                 'passagers' => $event-> getPassagers(),
                 'cabine'=>$event->getCabine(),
             ];

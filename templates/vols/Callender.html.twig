@@ -1,7 +1,7 @@
 {% extends 'base-back.html.twig' %}
 {% block body %}
     <br>
-    {% block title %}<center><h1>Theatre Calendar</h1></center>{% endblock %}
+    {% block title %}<center><h1>Vols Calendar</h1></center>{% endblock %}
     <br><br><br>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js" integrity="sha256-ekrJn2FeZaiUFq99QswpQCUTME/HxaDfX7R8INzKJGE=" crossorigin="anonymous"></script>
 
@@ -43,7 +43,7 @@
             });
             //get an object when you move an event
             calendar.on('eventChange', (e)=>{
-                let url =`/vols/api/${e.event.id}/edit`
+                let url =`/api/${e.event.id}/edit`
                 let donnees={
                     "destination_aller":e.event.extendedProps.destination_aller,
                     "destination_retour":e.event.extendedProps.destination_retour,
@@ -56,8 +56,9 @@
                 console.log(donnees);
                 let xhr = new XMLHttpRequest()
                   xhr.open("PUT", url)
-                xhr.setRequestHeader("X-Requested-With","XMLHttpRequest");
 
+            xhr.setRequestHeader("X-Requested-With","XMLHttpRequest") ;
+/* "X-Requested-With","XMLHttpRequest" */
                 xhr.send(JSON.stringify(donnees))
 
             })
