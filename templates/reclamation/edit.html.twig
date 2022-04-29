@@ -1,0 +1,67 @@
+{%  extends 'base.html.twig' %}
+{% block title %}Reclamation Edit{% endblock %}
+
+{% block body %}
+    <div class="container-fluid p0">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-banner-wrapper">
+                    <div class="banner-style-one owl-theme owl-carousel">
+                        <div class="slide slide-one" style="background-image: url({{asset('images/home/1.jpg')}}); height: 95vh;">
+                            <div class="container">
+                                <div class="row home-content">
+                                    <div class="col-lg-12 text-center p0">
+                                        <h3 class="banner-title">Self EducatIon Resources and Infos</h3>
+                                        <p>Technology is brining a massive wave of evolution on learning things on different ways.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide slide-one" style="background-image: url({{asset('images/home/2.jpg')}});height: 95vh;">
+                            <div class="container">
+                                <div class="row home-content">
+                                    <div class="col-lg-12 text-center p0">
+                                        <h3 class="banner-title">Self EducatIon Resources and Infos</h3>
+                                        <p>Technology is brining a massive wave of evolution on learning things on different ways</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide slide-one" style="background-image: url({{asset('images/home/3.jpg')}});height: 95vh;">
+                            <div class="container">
+                                <div class="row home-content">
+                                    <div class="col-lg-12 text-center p0">
+                                        <h3 class="banner-title">Find the Best Courses</h3>
+                                        <p>Technology is brining a massive wave of evolution on learning things on different ways</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-btn-block banner-carousel-btn">
+                        <span class="carousel-btn left-btn"><i class="flaticon-left-arrow left"></i></span>
+                        <span class="carousel-btn right-btn"><i class="flaticon-right-arrow-1 right"></i></span>
+                    </div><!-- /.carousel-btn-block banner-carousel-btn -->
+                </div><!-- /.main-banner-wrapper -->
+            </div>
+        </div>
+    </div>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shortcode_form_title">
+                    <h4>Form</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row mt40">
+            {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn-success">Modifier </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
